@@ -11,6 +11,8 @@ const App = () => {
   const [error, setError] = useState(null);
   const [filteredData, setFilteredData] = useState([]);
   const [selectedBtn, setSelectedBtn] = useState("all");
+
+  const [likedFood, setLikedFood] = useState([]);
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -61,10 +63,6 @@ const App = () => {
 
   }
 
-
-  const test = (e) => {
-    console.log(e.target.innerText);
-  }
   if (error) return <div>{error}</div>
   if (loading) return <div>Loading...</div>
 
@@ -90,7 +88,7 @@ const App = () => {
 
 
       </Container>
-      <SearchResult data={filteredData} />
+      <SearchResult data={filteredData} likedFood={likedFood} setLikedFood={setLikedFood} />
     </>)
 };
 

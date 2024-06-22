@@ -1,9 +1,32 @@
 import React from 'react'
 import styled from "styled-components"
 import { BASE_URL, Button, Container } from '../App'
+import { FcLikePlaceholder, FcLike } from "react-icons/fc";
+import { toast } from 'react-toastify';
 
+const SearchResult = ({ data, likedFood, setLikedFood }) => {
+  console.log("i am liked array" + likedFood + "test")
+  const clickHandler = (name) => {
+    if (likedFood.includes(name.toLowerCase())) {
+      console.log(likedFood);
+      setLikedFood((prev) => prev.filter((e) => e !== name))
+      toast.warning("Like removed");
+      console.log("already liked");
+    }
+    else {
+      if (likedFood.length === 0) {
+        setLikedFood([name.toLowerCase()]);
+        toast.success("food liked");
+        console.log(likedFood);
 
-const SearchResult = ({ data }) => {
+      }
+      else {
+        setLikedFood((prev) => [...prev, name])
+        toast.success("food liked");
+        console.log(likedFood);
+      }
+    }
+  }
   return (
     <FoodCardsContainer>
       <Container>
@@ -19,7 +42,13 @@ const SearchResult = ({ data }) => {
                   <h3>{item.name}</h3>
                   <p>{item.text}</p>
                 </div>
-                <Button>${item.price.toFixed(2)}</Button>
+                <div className='liked-price'>
+                  {
+                    !likedFood.includes(item.name.toLowerCase()) ? <FcLikePlaceholder cursor="pointer" fontSize="1.5rem" onClick={() => clickHandler(item.name.toLowerCase())}></FcLikePlaceholder> : <FcLike cursor="pointer" fontSize="1.5rem" onClick={() => clickHandler(item.name.toLowerCase())}></FcLike>
+                  }
+
+                  <Button>${item.price.toFixed(2)}</Button>
+                </div>
               </div>
             </FoodCard>))
           }
@@ -95,5 +124,11 @@ const FoodCard = styled.div`
     button {
       font-size: 12px;
     }
+  }
+
+  .liked-price{
+    display: flex;
+    gap: 10px;
+   
   }
 `;
