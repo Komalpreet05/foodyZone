@@ -5,7 +5,7 @@ import SearchResult from "./components/SearchResult";
 export const BASE_URL = "http://localhost:9000";
 
 const App = () => {
-
+  const btns = ["All", "Breakfast", "Lunch", "Dinner"];
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -16,7 +16,6 @@ const App = () => {
       setLoading(true);
       const res = await fetch(BASE_URL);
       const json = await res.json();
-      // console.log(json);
       setData(json);
       setFilteredData(json);
     }
@@ -27,8 +26,6 @@ const App = () => {
     }
     setLoading(false);
   }
-
-  // fetchData();
 
   useEffect(() => {
     fetchData();
@@ -45,38 +42,29 @@ const App = () => {
     console.log(searchValue);
     console.log(filter);
     setFilteredData(filter);
-
-    // if (searchValue) {
-    //   const filter = data.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
-    //   setFilteredData(filter);
-    // }
-    // else {
-    //   setFilteredData(data)
-    // }
   }
 
-  const filteredFood = (type) => {
-    console.log(type);
-    if (type == "all") {
+  const filteredFood = (e) => {
+    if (e.target.innerText == "All") {
       setFilteredData(data);
-      setSelectedBtn("all");
+      setSelectedBtn("All");
       return;
     }
-    console.log(selectedBtn);
 
-    const filteredN = data.filter((item) => {
-      // item.type.toLowerCase().includes(e.target.toLowerCase());
-      // setSelectedBtn(item.type);
-      console.log(item.type);
-      console.log(type);
-    })
+    const filteredN = data?.filter((item) => item.type.toLowerCase().includes(e.target.innerText.toLowerCase())
+    )
 
     console.log(filteredN);
 
+    setFilteredData(filteredN);
+    setSelectedBtn(e.target.innerText);
+
   }
 
-  // console.log(data);
 
+  const test = (e) => {
+    console.log(e.target.innerText);
+  }
   if (error) return <div>{error}</div>
   if (loading) return <div>Loading...</div>
 
@@ -94,10 +82,9 @@ const App = () => {
         </TopContainer>
 
         <FilterContainer>
-          <Button onClick={filteredFood}>All</Button>
-          <Button onClick={filteredFood}>Breakfast</Button>
-          <Button>Lunch</Button>
-          <Button>Dinner</Button>
+          {
+            btns.map((b) => <Button isSelected={selectedBtn == b} onClick={filteredFood}>{b}</Button>)
+          }
         </FilterContainer>
 
 
@@ -132,6 +119,11 @@ padding: 16px;
     font-size: 16px;
     padding: 0 10px;
   }
+}
+
+@media (0 < width <600px){
+  flex-direction: column;
+  /* height: 60px; */
 }
 
 `

@@ -4,29 +4,29 @@ import { BASE_URL, Button, Container } from '../App'
 
 
 const SearchResult = ({ data }) => {
-    return (
-        <FoodCardsContainer>
-            <Container>
-                <FoodCards>
-                    {
+  return (
+    <FoodCardsContainer>
+      <Container>
+        <FoodCards>
+          {
 
-                        data.map((item, index) => (<FoodCard key={index} item={item}>
-                            <div className='foodImg'>
-                                <img src={BASE_URL + item.image} alt='img' />
-                            </div>
-                            <div className='foodInfo'>
-                                <div className="info">
-                                    <h3>{item.name}</h3>
-                                    <p>{item.text}</p>
-                                </div>
-                                <Button>${item.price.toFixed(2)}</Button>
-                            </div>
-                        </FoodCard>))
-                    }
-                </FoodCards>
-            </Container>
-        </FoodCardsContainer>
-    )
+            data.map((item, index) => (<FoodCard key={index} item={item}>
+              <div className='foodImg'>
+                <img src={BASE_URL + item.image} alt='img' />
+              </div>
+              <div className='foodInfo'>
+                <div className="info">
+                  <h3>{item.name}</h3>
+                  <p>{item.text}</p>
+                </div>
+                <Button>${item.price.toFixed(2)}</Button>
+              </div>
+            </FoodCard>))
+          }
+        </FoodCards>
+      </Container>
+    </FoodCardsContainer>
+  )
 }
 
 export default SearchResult
@@ -77,11 +77,12 @@ const FoodCard = styled.div`
   display: flex;
   padding: 8px;
 
-  .food_info {
+  .foodInfo {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: end;
+    gap: 10px;
     h3 {
       margin-top: 8px;
       font-size: 16px;
